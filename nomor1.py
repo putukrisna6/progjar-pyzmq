@@ -1,12 +1,8 @@
 #!/usr/bin/env python3
 
 import random, threading, zmq, time, sqlite3
-B = 32
 
 #region Helper
-
-def ones_and_zeroes(digits):
-    return bin(random.getrandbits(digits)).lstrip('0b').zfill(digits)
 
 def sqlHelper(n1, n2, num):
     db = sqlite3.connect('prereq/data.db')
