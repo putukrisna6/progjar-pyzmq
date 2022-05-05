@@ -8,6 +8,16 @@ B = 32
 def ones_and_zeroes(digits):
     return bin(random.getrandbits(digits)).lstrip('0b').zfill(digits)
 
+def sqlHelper(n1, n2, num):
+    db = sqlite3.connect('prereq/data.db')
+    mod = str(len('FirstNameMiddleNameLastName') % 3)
+    sql = "select count(*) from MOCKDATA where (ID>='{0}' AND ID<='{1}') AND '{3}' % 3 = '{2}';".format(n1, n1+n2, num, mod)
+    cur = db.cursor()
+
+    cur.execute(sql)
+    value = int(cur.fetchone()[0])
+    return value
+
 #endregion
 
 #region Routine
@@ -31,15 +41,23 @@ def executor(zcontext, in_url, out_url):
     osock.connect(out_url)
 
     while True:
-        bits = isock.recv_string()
-        osock.send_string('hai ' + bits)
+        num = int(isock.recv_string())
+
+        n1 = random.randint(1, 99000)
+        n2 = random.randint(1, 1000)
+
+        value = sqlHelper(n1, n2, num)
+
+        res = 'n1=' + str(n1) + ', n2=' + str(n2) + ', num=' + str(num) + ', hasil=' + str(value) 
+
+        osock.send_string(res)
 
 def logger(zcontext, url):
     zsock = zcontext.socket(zmq.PULL)
     zsock.bind(url)
     while True:
         result = zsock.recv_string()
-        print('logger: ' + result)
+        print(result)
 
 #endregion
 
