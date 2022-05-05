@@ -9,7 +9,6 @@ def sqlHelper(n1, n2, num):
     mod = str(len('FirstNameMiddleNameLastName') % 3)
     sql = "select count(*) from MOCKDATA where (ID>='{0}' AND ID<='{1}') AND '{3}' % 3 = '{2}';".format(n1, n1+n2, num, mod)
     cur = db.cursor()
-
     cur.execute(sql)
     value = int(cur.fetchone()[0])
     return value
@@ -38,14 +37,11 @@ def executor(zcontext, url):
 
     while True:
         num = int(zsock.recv_string())
-
         n1 = random.randint(1, 99000)
         n2 = random.randint(1, 1000)
-
         value = sqlHelper(n1, n2, num)
-
+        
         res = 'n1=' + str(n1) + ', n2=' + str(n2) + ', num=' + str(num) + ', hasil=' + str(value) 
-
         zsock.send_string(res)
 
 def logger(zcontext, url):
