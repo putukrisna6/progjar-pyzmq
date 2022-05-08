@@ -24,7 +24,7 @@ def generator(zcontext, executor_url, out_url):
     osock.connect(out_url)
 
     while True:
-        num = str(random.randint(0,2))
+        num = str(random.randint(0,1))
         psock.send_string(num)
         time.sleep(0.01)
 
