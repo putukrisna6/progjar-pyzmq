@@ -7,7 +7,7 @@ import random, threading, zmq, time, sqlite3
 def sqlHelper(n1, n2, num):
     db = sqlite3.connect('prereq/data.db')
     mod = str(len('FirstNameLastName') % 3)
-    sql = "select count(*) from MOCKDATA where (ID>='{0}' AND ID<='{1}') AND '{3}' % 3 = '{2}';".format(n1, n1+n2, num, mod)
+    sql = "select count(*) from MOCKDATA where (ID>='{0}' AND ID<='{1}') AND '{3}' = '{2}';".format(n1, n1+n2, num, mod)
     cur = db.cursor()
     cur.execute(sql)
     value = int(cur.fetchone()[0])
